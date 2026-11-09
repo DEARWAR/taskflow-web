@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Online Task Update</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f4f6f9; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container { 
+            background: #ffffff; 
+            max-width: 480px; 
+            width: 100%; 
+            padding: 28px; 
+            border-radius: 16px; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+        .header h2 { 
+            color: #1E88E5; 
+            margin: 0; 
+            font-size: 22px;
+        }
+        .badge { 
+            background: #FFF3E0; 
+            color: #E65100; 
+            font-weight: bold; 
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            font-size: 14px; 
+        }
+        label { 
+            font-weight: 600; 
+            display: block; 
+            margin-top: 18px; 
+            margin-bottom: 8px; 
+            color: #333;
+            font-size: 14px; 
+        }
+        select, textarea { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1.5px solid #e0e0e0; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        select:focus, textarea:focus {
+            border-color: #1E88E5;
+        }
+        button { 
+            background: #2E7D32; 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            width: 100%; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 24px; 
+            transition: background 0.2s;
+        }
+        button:hover { 
+            background: #1B5E20; 
+        }
+        .success-box { 
+            display: none; 
+            background: #E8F5E9; 
+            color: #1B5E20; 
+            padding: 16px; 
+            border-radius: 8px; 
+            text-align: center; 
+            font-weight: 600; 
+            margin-top: 20px; 
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>📋 TaskFlow Update</h2>
+        <span id="taskIdDisplay" class="badge">TASK-1001</span>
+    </div>
+
+    <form id="updateForm">
+        <label for="status">Select Task Status:</label>
+        <select id="status" name="status">
+            <option value="Completed">Completed / Ready for Verification</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Pending">Pending</option>
+            <option value="Overdue">Overdue</option>
+            <option value="Blocked">Blocked</option>
+            <option value="Reassigned">Reassigned</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+
+        <label for="note">Completion Note / Work Update Details *</label>
+        <textarea id="note" name="note" rows="4" placeholder="Type what work was completed or current update..." required></textarea>
+
+        <button type="submit">Submit Task Status Update</button>
+    </form>
+
+    <div id="successBox" class="success-box">
+        ✅ Status submitted successfully!<br>
+        The manager has been notified and task status has been updated.
+    </div>
+</div>
+
+<script>
+    // Extract task_id from URL query parameters (e.g. ?task_id=TASK-1004)
+    const urlParams = new URLSearchParams(window.location.search);
+    const taskId = urlParams.get('task_id') || 'TASK-1001';
+    document.getElementById('taskIdDisplay').innerText = taskId;
+
+    document.getElementById('updateForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const status = document.getElementById('status').value;
+        const note = document.getElementById('note').value;
+
+        // Show Success Message
+        document.getElementById('updateForm').style.display = 'none';
+        document.getElementById('successBox').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
